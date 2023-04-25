@@ -28,8 +28,24 @@ const MainScreen = () => {
 
   const CategoryCard = () => {
     return (
-      <View>
-        <Text>Hello Card</Text>
+      <View >
+        <Text>Category Card</Text>
+        <View style={{height:100, alignItems:'center', justifyContent:'center'}}>
+          <Text style={{color:'gray'}}>Select product to add here</Text>
+        </View>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+        <View style={{width:'45%', justifyContent:'space-between', flexDirection:'row'}}>
+          <TouchableOpacity>
+            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Add Product</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Remove Product</Text>
+          </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Remove Category</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
