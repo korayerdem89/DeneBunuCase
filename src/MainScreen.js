@@ -53,7 +53,7 @@ const MainScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.reviewCard}>
-<Text>Review</Text>
+<Text style={{textAlign:'center', fontWeight:'500', color:'green', marginVertical:5}}>Review</Text>
 <Text>Available Products: {null}</Text>
 <Text>Categories: {null} </Text>
 <Text>Category {null}: {null} products </Text>
