@@ -15,7 +15,8 @@ const MainScreen = () => {
     { id: 9, label: "Checkbox 9", checked: false, groupIndex: 0 },
     { id: 10, label: "Checkbox 10", checked: false, groupIndex: 0 },
   ]);
-  const [categoryCards, setCategoryCards] = useState([1]);
+  const [categoryCards, setCategoryCards] = useState(["1"]);
+
   const handleCheckboxChange = (id) => {
     const updatedCheckboxes = checkboxes.map((checkbox) => {
       if (checkbox.id === id) {
@@ -27,14 +28,15 @@ const MainScreen = () => {
   };
 
   const handleAddCategory = () => { 
-   categoryCards.push(categoryCards.length+1);
+ setCategoryCards([...categoryCards, categoryCards.length +1]);
   }
 
   const handleRemoveCategory = () => { 
     categoryCards.pop();
+    setCategoryCards([...categoryCards]);
    }
 
-console.log(categoryCards);
+ console.log(categoryCards)
   const CategoryCard = ({ value }) => {
     return (
       <View style={{marginVertical:10}}>
