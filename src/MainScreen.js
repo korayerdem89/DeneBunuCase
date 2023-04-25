@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Checkbox from "expo-checkbox";
 
 const MainScreen = () => {
@@ -15,6 +21,7 @@ const MainScreen = () => {
     { id: 9, label: "Checkbox 9", checked: false, groupIndex: 0 },
     { id: 10, label: "Checkbox 10", checked: false, groupIndex: 0 },
   ]);
+
   const [categoryCards, setCategoryCards] = useState(["1"]);
 
   const handleCheckboxChange = (id) => {
@@ -27,24 +34,50 @@ const MainScreen = () => {
     setCheckboxes(updatedCheckboxes);
   };
 
-  const handleAddCategory = () => { 
- setCategoryCards([...categoryCards, categoryCards.length +1]);
-  }
+  const handleAddCategory = () => {
+    setCategoryCards([...categoryCards, categoryCards.length + 1]);
+  };
 
-  const handleRemoveCategory = () => { 
+  const handleRemoveCategory = () => {
     categoryCards.pop();
     setCategoryCards([...categoryCards]);
-   }
+  };
 
- console.log(categoryCards)
+  const handleAddProduct = (value) => {
+    const filteredCheckboxes = checkboxes.filter(
+      (checkbox) => checkbox.checked
+    );
+    const newCheckBoxes = checkboxes.filter((checkbox) => !checkbox.checked);
+    const updatedCheckBox = filteredCheckboxes.map((item) => ({
+      ...item,
+      checked: false,
+      groupIndex: 1,
+    }));
+    setCheckboxes((checkbox) => [...newCheckBoxes, ...updatedCheckBox]);
+  };
+
+  const FilteredCheckboxes = ({ value }) => {
+    return checkboxes
+      .filter((item) => item.groupIndex === value)
+      .map((checkbox) => (
+        <View style={styles.checkBoxContainer} key={checkbox.id}>
+          <Checkbox
+            value={checkbox.checked}
+            onValueChange={() => handleCheckboxChange(checkbox.id)}
+          />
+          <Text style={styles.checkboxText}>{checkbox.label}</Text>
+        </View>
+      ));
+  };
+
   const CategoryCard = ({ value }) => {
     return (
-      <View style={{marginVertical:10}}>
+      <View style={{ marginVertical: 10 }}>
         <Text>Category {value}</Text>
         <View
           style={{ height: 70, alignItems: "center", justifyContent: "center" }}
         >
-        <Text style={{ color: "gray" }}>Select product to add here</Text>
+          <FilteredCheckboxes value={value} />
         </View>
         <View
           style={{
@@ -60,7 +93,7 @@ const MainScreen = () => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => handleAddProduct(value)}>
               <Text
                 style={{
                   padding: 5,
@@ -124,24 +157,24 @@ const MainScreen = () => {
       <View style={styles.availableProductsCard}>
         <Text style={styles.availableProductsText}>Available Products</Text>
         <View style={styles.group0}>
-          {checkboxes.map((checkbox) => (
-            <View style={styles.checkBoxContainer} key={checkbox.id}>
-              <Checkbox
-                value={checkbox.checked}
-                onValueChange={() => handleCheckboxChange(checkbox.id)}
-              />
-              <Text style={styles.checkboxText}>{checkbox.label}</Text>
-            </View>
-          ))}
+          <FilteredCheckboxes value={0} />
         </View>
       </View>
       <View style={styles.categoryCards}>
         <ScrollView>
-        {categoryCards.map((item, index) => (
-          <View style={{marginVertical:5, backgroundColor:'white', padding:10, borderRadius:5}} key={item}>
-            <CategoryCard value={index + 1} />
-          </View>
-        ))}
+          {categoryCards.map((item, index) => (
+            <View
+              style={{
+                marginVertical: 5,
+                backgroundColor: "white",
+                padding: 10,
+                borderRadius: 5,
+              }}
+              key={item}
+            >
+              <CategoryCard value={index + 1} />
+            </View>
+          ))}
         </ScrollView>
       </View>
       <TouchableOpacity onPress={handleAddCategory}>
@@ -194,7 +227,7 @@ const styles = StyleSheet.create({
   },
   categoryCards: {
     marginVertical: 10,
-    height:300
+    height: 300,
   },
   reviewCard: {
     padding: 10,
