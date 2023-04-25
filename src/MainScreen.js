@@ -51,7 +51,7 @@ const MainScreen = () => {
     const updatedCheckBox = filteredCheckboxes.map((item) => ({
       ...item,
       checked: false,
-      groupIndex: 1,
+      groupIndex: value,
     }));
     setCheckboxes((checkbox) => [...newCheckBoxes, ...updatedCheckBox]);
   };
