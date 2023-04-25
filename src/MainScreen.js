@@ -30,7 +30,7 @@ const MainScreen = () => {
     return (
       <View >
         <Text>Category Card</Text>
-        <View style={{height:100, alignItems:'center', justifyContent:'center'}}>
+        <View style={{height:70, alignItems:'center', justifyContent:'center'}}>
           <Text style={{color:'gray'}}>Select product to add here</Text>
         </View>
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
@@ -52,6 +52,12 @@ const MainScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.reviewCard}>
+<Text>Review</Text>
+<Text>Available Products: {null}</Text>
+<Text>Categories: {null} </Text>
+<Text>Category {null}: {null} products </Text>
+      </View>
       <View style={styles.availableProductsCard}>
         <Text style={styles.availableProductsText}>Available Products</Text>
         <View style={styles.group0}>
@@ -114,5 +120,11 @@ const styles = StyleSheet.create({
     padding:10,
     backgroundColor:'white',
     marginVertical:10
+  },
+  reviewCard:{
+    padding:10,
+    backgroundColor:'white',
+    marginVertical:10,
+    height:150
   }
 });
