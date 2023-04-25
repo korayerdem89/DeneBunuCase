@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Checkbox from "expo-checkbox";
 
 const MainScreen = () => {
@@ -15,7 +15,7 @@ const MainScreen = () => {
     { id: 9, label: "Checkbox 9", checked: false, groupIndex: 0 },
     { id: 10, label: "Checkbox 10", checked: false, groupIndex: 0 },
   ]);
-
+  const [categoryCards, setCategoryCards] = useState([1]);
   const handleCheckboxChange = (id) => {
     const updatedCheckboxes = checkboxes.map((checkbox) => {
       if (checkbox.id === id) {
@@ -26,24 +26,74 @@ const MainScreen = () => {
     setCheckboxes(updatedCheckboxes);
   };
 
-  const CategoryCard = () => {
+  const handleAddCategory = () => { 
+   categoryCards.push(categoryCards.length+1);
+  }
+
+  const handleRemoveCategory = () => { 
+    categoryCards.pop();
+   }
+
+console.log(categoryCards);
+  const CategoryCard = ({ value }) => {
     return (
-      <View >
-        <Text>Category Card</Text>
-        <View style={{height:70, alignItems:'center', justifyContent:'center'}}>
-          <Text style={{color:'gray'}}>Select product to add here</Text>
+      <View style={{marginVertical:10}}>
+        <Text>Category {value}</Text>
+        <View
+          style={{ height: 70, alignItems: "center", justifyContent: "center" }}
+        >
+        <Text style={{ color: "gray" }}>Select product to add here</Text>
         </View>
-        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-        <View style={{width:'45%', justifyContent:'space-between', flexDirection:'row'}}>
-          <TouchableOpacity>
-            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Add Product</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Remove Product</Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              width: "45%",
+              justifyContent: "space-between",
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity>
+              <Text
+                style={{
+                  padding: 5,
+                  backgroundColor: "gray",
+                  color: "white",
+                  fontSize: 10,
+                }}
+              >
+                Add Product
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  padding: 5,
+                  backgroundColor: "gray",
+                  color: "white",
+                  fontSize: 10,
+                }}
+              >
+                Remove Product
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity>
-            <Text style={{padding:5, backgroundColor:'gray', color:'white', fontSize:10 }}>Remove Category</Text>
+          <TouchableOpacity onPress={handleRemoveCategory}>
+            <Text
+              style={{
+                padding: 5,
+                backgroundColor: "gray",
+                color: "white",
+                fontSize: 10,
+              }}
+            >
+              Remove Category
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -53,10 +103,21 @@ const MainScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.reviewCard}>
-<Text style={{textAlign:'center', fontWeight:'500', color:'green', marginVertical:5}}>Review</Text>
-<Text>Available Products: {null}</Text>
-<Text>Categories: {null} </Text>
-<Text>Category {null}: {null} products </Text>
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "500",
+            color: "green",
+            marginVertical: 5,
+          }}
+        >
+          Review
+        </Text>
+        <Text>Available Products: {null}</Text>
+        <Text>Categories: {null} </Text>
+        <Text>
+          Category {null}: {null} products{" "}
+        </Text>
       </View>
       <View style={styles.availableProductsCard}>
         <Text style={styles.availableProductsText}>Available Products</Text>
@@ -73,13 +134,26 @@ const MainScreen = () => {
         </View>
       </View>
       <View style={styles.categoryCards}>
-          <CategoryCard />
-        </View>
-        <TouchableOpacity>
-          <View style={{alignItems:'center', padding:5, backgroundColor:'blue', borderRadius:5}}>
-          <Text style={{color:'white'}}>Add Category</Text>
+        <ScrollView>
+        {categoryCards.map((item, index) => (
+          <View style={{marginVertical:5, backgroundColor:'white', padding:10, borderRadius:5}} key={item}>
+            <CategoryCard value={index + 1} />
           </View>
-        </TouchableOpacity>
+        ))}
+        </ScrollView>
+      </View>
+      <TouchableOpacity onPress={handleAddCategory}>
+        <View
+          style={{
+            alignItems: "center",
+            padding: 5,
+            backgroundColor: "blue",
+            borderRadius: 5,
+          }}
+        >
+          <Text style={{ color: "white" }}>Add Category</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -116,15 +190,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  categoryCards:{
-    padding:10,
-    backgroundColor:'white',
-    marginVertical:10
+  categoryCards: {
+    marginVertical: 10,
+    height:300
   },
-  reviewCard:{
-    padding:10,
-    backgroundColor:'white',
-    marginVertical:10,
-    height:150
-  }
+  reviewCard: {
+    padding: 10,
+    backgroundColor: "white",
+    marginVertical: 10,
+    height: 150,
+  },
 });
