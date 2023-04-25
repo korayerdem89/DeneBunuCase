@@ -53,12 +53,25 @@ const MainScreen = () => {
       checked: false,
       groupIndex: value,
     }));
-    setCheckboxes((checkbox) => [...newCheckBoxes, ...updatedCheckBox]);
+    setCheckboxes([...newCheckBoxes, ...updatedCheckBox]);
+  };  
+  const handleRemoveProduct = () => {
+    const filteredCheckboxes = checkboxes.filter(
+      (checkbox) => checkbox.checked
+    );
+    const newCheckBoxes = checkboxes.filter((checkbox) => !checkbox.checked);
+    const updatedCheckBox = filteredCheckboxes.map((item) => ({
+      ...item,
+      checked: false,
+      groupIndex: 0,
+    }));
+    setCheckboxes([...newCheckBoxes, ...updatedCheckBox]);
   };
 
   const FilteredCheckboxes = ({ value }) => {
     return checkboxes
       .filter((item) => item.groupIndex === value)
+      .sort((a, b) => a.id - b.id)
       .map((checkbox) => (
         <View style={styles.checkBoxContainer} key={checkbox.id}>
           <Checkbox
@@ -69,7 +82,7 @@ const MainScreen = () => {
         </View>
       ));
   };
-
+console.log(checkboxes);
   const CategoryCard = ({ value }) => {
     return (
       <View style={{ marginVertical: 10 }}>
@@ -105,7 +118,7 @@ const MainScreen = () => {
                 Add Product
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleRemoveProduct}>
               <Text
                 style={{
                   padding: 5,
