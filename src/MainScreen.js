@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Checkbox from 'expo-checkbox';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Checkbox from "expo-checkbox";
 
 const MainScreen = () => {
   const [checkboxes, setCheckboxes] = useState([
-    { id: 1, label: 'Checkbox 1', checked: false, groupIndex:0 },
-    { id: 2, label: 'Checkbox 2', checked: false, groupIndex:0 },
-    { id: 3, label: 'Checkbox 3', checked: false, groupIndex:0 },
-    { id: 4, label: 'Checkbox 4', checked: false, groupIndex:0 },
-    { id: 5, label: 'Checkbox 5', checked: false, groupIndex:0 },
-    { id: 6, label: 'Checkbox 6', checked: false, groupIndex:0 },
-    { id: 7, label: 'Checkbox 7', checked: false, groupIndex:0 },
-    { id: 8, label: 'Checkbox 8', checked: false, groupIndex:0 },
-    { id: 9, label: 'Checkbox 9', checked: false, groupIndex:0 },
-    { id: 10, label: 'Checkbox 10', checked: false, groupIndex:0 },
+    { id: 1, label: "Checkbox 1", checked: false, groupIndex: 0 },
+    { id: 2, label: "Checkbox 2", checked: false, groupIndex: 0 },
+    { id: 3, label: "Checkbox 3", checked: false, groupIndex: 0 },
+    { id: 4, label: "Checkbox 4", checked: false, groupIndex: 0 },
+    { id: 5, label: "Checkbox 5", checked: false, groupIndex: 0 },
+    { id: 6, label: "Checkbox 6", checked: false, groupIndex: 0 },
+    { id: 7, label: "Checkbox 7", checked: false, groupIndex: 0 },
+    { id: 8, label: "Checkbox 8", checked: false, groupIndex: 0 },
+    { id: 9, label: "Checkbox 9", checked: false, groupIndex: 0 },
+    { id: 10, label: "Checkbox 10", checked: false, groupIndex: 0 },
   ]);
 
   const handleCheckboxChange = (id) => {
@@ -26,24 +26,38 @@ const MainScreen = () => {
     setCheckboxes(updatedCheckboxes);
   };
 
+  const CategoryCard = () => {
+    return (
+      <View>
+        <Text>Hello Card</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
- <View style={styles.availableProductsCard}>
-<Text style={styles.availableProductsText}>Available Products</Text>
- <View style={styles.group0}>
- {checkboxes.map((checkbox) => (
-        <View style={styles.checkBoxContainer} key={checkbox.id}>
-          <Checkbox
-            value={checkbox.checked}
-            onValueChange={() => handleCheckboxChange(checkbox.id)}
-          />
-          <Text style={styles.checkboxText}>{checkbox.label}</Text>
+      <View style={styles.availableProductsCard}>
+        <Text style={styles.availableProductsText}>Available Products</Text>
+        <View style={styles.group0}>
+          {checkboxes.map((checkbox) => (
+            <View style={styles.checkBoxContainer} key={checkbox.id}>
+              <Checkbox
+                value={checkbox.checked}
+                onValueChange={() => handleCheckboxChange(checkbox.id)}
+              />
+              <Text style={styles.checkboxText}>{checkbox.label}</Text>
+            </View>
+          ))}
         </View>
-      ))}
- </View>
-
       </View>
-
+      <View style={styles.categoryCards}>
+          <CategoryCard />
+        </View>
+        <TouchableOpacity>
+          <View style={{alignItems:'center', padding:5, backgroundColor:'blue', borderRadius:5}}>
+          <Text style={{color:'white'}}>Add Category</Text>
+          </View>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -51,32 +65,38 @@ const MainScreen = () => {
 export default MainScreen;
 
 const styles = StyleSheet.create({
-    container:{
-        padding:10
-    },
-    checkBoxContainer:{
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    checkboxText:{
-        marginLeft:5,
-        marginVertical:5
-    },
-    availableProductsCard:{
-      borderWidth:1,
-      padding:10,
-      borderColor:'#d5d5d5',
-      backgroundColor:'white' 
-    },
-    availableProductsText:{
-      textAlign:'center',
-      fontWeight:'500',
-      padding:10,
-      color:'green'
-    },
-    group0:{
-      flexWrap:'wrap',
-      flexDirection:'row',
-      justifyContent:'space-between',
-    },
-})
+  container: {
+    padding: 10,
+  },
+  checkBoxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkboxText: {
+    marginLeft: 5,
+    marginVertical: 5,
+  },
+  availableProductsCard: {
+    borderWidth: 1,
+    padding: 10,
+    borderColor: "#d5d5d5",
+    backgroundColor: "white",
+  },
+  availableProductsText: {
+    textAlign: "center",
+    fontWeight: "500",
+    padding: 10,
+    color: "green",
+  },
+  group0: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  categoryCards:{
+    padding:10,
+    backgroundColor:'white',
+    marginVertical:10
+  }
+});
